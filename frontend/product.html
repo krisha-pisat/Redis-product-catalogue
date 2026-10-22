@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Catalogue — Product</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="product">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-logo">◈</span>
+        <span class="brand-text">
+          <span class="brand-name">PROJECT CATALOGUE</span>
+          <span class="brand-sub">Redis-Powered Product Management</span>
+        </span>
+      </a>
+      <nav class="nav">
+        <a href="index.html#products" data-nav="products">Products</a>
+        <a href="admin.html" data-nav="admin">Admin</a>
+        <a href="index.html#cache-monitor" data-nav="cache">Cache Monitor</a>
+        <span class="status-pill" id="header-status" title="Backend status">
+          <span class="dot"></span><span class="label">Checking…</span>
+        </span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container section">
+    <a href="index.html#products" class="back-link">← Back to products</a>
+
+    <div class="detail-layout">
+      <article class="panel detail-card" id="product-detail"></article>
+
+      <aside class="detail-side">
+        <div class="panel cache-card" id="cache-card">
+          <h3 class="panel-title">Redis Cache</h3>
+          <div class="cache-card-body" id="cache-card-body">
+            <p class="muted">Waiting for the first request…</p>
+          </div>
+          <button class="btn btn-ghost btn-block" id="refetch">↻ Fetch again</button>
+        </div>
+
+        <div class="panel">
+          <h3 class="panel-title">Cache Performance</h3>
+          <div id="perf-demo" class="perf-demo"></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">◈ Project Catalogue — Improving Web Application Performance Using Redis Caching</div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/product.js"></script>
+</body>
+</html>

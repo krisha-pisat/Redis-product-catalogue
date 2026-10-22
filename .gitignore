@@ -1,0 +1,8 @@
+# Secrets, anywhere in the repo
+.env
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc

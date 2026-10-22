@@ -1,0 +1,8 @@
+# Secrets are passed in at runtime by docker compose, never baked into the image.
+.env
+venv/
+.venv/
+__pycache__/
+*.pyc
+Dockerfile
+.dockerignore

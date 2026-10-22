@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Catalogue — Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="admin">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-logo">◈</span>
+        <span class="brand-text">
+          <span class="brand-name">PROJECT CATALOGUE</span>
+          <span class="brand-sub">Redis-Powered Product Management</span>
+        </span>
+      </a>
+      <nav class="nav">
+        <a href="index.html#products" data-nav="products">Products</a>
+        <a href="admin.html" data-nav="admin">Admin</a>
+        <a href="index.html#cache-monitor" data-nav="cache">Cache Monitor</a>
+        <span class="status-pill" id="header-status" title="Backend status">
+          <span class="dot"></span><span class="label">Checking…</span>
+        </span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container section">
+    <div class="section-head">
+      <div>
+        <h2>Admin</h2>
+        <p class="muted">Every change is written to Supabase, then the affected Redis keys are invalidated.</p>
+      </div>
+    </div>
+
+    <div class="admin-layout">
+      <form class="panel admin-form" id="product-form" novalidate>
+        <h3 class="panel-title" id="form-title">Add Product</h3>
+        <input type="hidden" id="product-id">
+
+        <label class="field">
+          <span>Product Name <em>*</em></span>
+          <input class="input" id="name" maxlength="100" required>
+        </label>
+
+        <label class="field">
+          <span>Description</span>
+          <textarea class="input" id="description" rows="3"></textarea>
+        </label>
+
+        <div class="field-row">
+          <label class="field">
+            <span>Price (₹) <em>*</em></span>
+            <input class="input" id="price" type="number" min="0" step="0.01" required>
+          </label>
+          <label class="field">
+            <span>Category</span>
+            <input class="input" id="category" maxlength="50" list="category-options">
+            <datalist id="category-options">
+              <option value="Mobile"></option>
+              <option value="Audio"></option>
+              <option value="Laptop"></option>
+              <option value="Accessories"></option>
+            </datalist>
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Image URL</span>
+          <input class="input" id="image_url" type="url" placeholder="https://…">
+        </label>
+
+        <p class="form-error" id="form-error" hidden></p>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="submit-btn">Add Product</button>
+          <button type="button" class="btn btn-ghost" id="cancel-edit" hidden>Cancel</button>
+        </div>
+
+        <div class="invalidation" id="invalidation" hidden></div>
+      </form>
+
+      <div class="panel table-panel">
+        <div class="panel-head">
+          <h3 class="panel-title">Products</h3>
+          <div class="cache-strip" id="list-cache" hidden></div>
+        </div>
+        <div class="table-wrap">
+          <table class="product-table">
+            <thead>
+              <tr><th>Name</th><th>Price</th><th>Category</th><th class="actions-col">Actions</th></tr>
+            </thead>
+            <tbody id="product-rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">◈ Project Catalogue — Improving Web Application Performance Using Redis Caching</div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

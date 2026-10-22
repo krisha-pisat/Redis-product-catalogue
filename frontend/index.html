@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Catalogue — Products</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="products">
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-logo">◈</span>
+        <span class="brand-text">
+          <span class="brand-name">PROJECT CATALOGUE</span>
+          <span class="brand-sub">Redis-Powered Product Management</span>
+        </span>
+      </a>
+      <nav class="nav">
+        <a href="index.html#products" data-nav="products">Products</a>
+        <a href="admin.html" data-nav="admin">Admin</a>
+        <a href="index.html#cache-monitor" data-nav="cache">Cache Monitor</a>
+        <span class="status-pill" id="header-status" title="Backend status">
+          <span class="dot"></span><span class="label">Checking…</span>
+        </span>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <p class="eyebrow">Supabase · FastAPI · Redis</p>
+      <h1>PROJECT CATALOGUE</h1>
+      <p class="hero-tagline">Fast products. Smart caching.</p>
+      <p class="hero-copy">Explore products powered by Supabase with Redis caching for faster responses.</p>
+      <a href="#products" class="btn btn-primary btn-lg">Explore Products</a>
+    </div>
+  </section>
+
+  <main class="container">
+
+    <!-- ============ PRODUCTS ============ -->
+    <section id="products" class="section">
+      <div class="section-head">
+        <div>
+          <h2>Products</h2>
+          <p class="muted">Search and filter — each distinct query is cached in Redis under its own key.</p>
+        </div>
+        <div class="cache-strip" id="list-cache" hidden></div>
+      </div>
+
+      <form class="search-bar" id="search-form" role="search">
+        <input type="search" id="search-input" placeholder="Search products..." autocomplete="off" aria-label="Search products">
+        <button type="submit" class="search-btn" aria-label="Search">🔍</button>
+      </form>
+
+      <div class="filters" id="category-filters" role="tablist" aria-label="Category filters"></div>
+
+      <div class="product-grid" id="product-grid"></div>
+    </section>
+
+    <!-- ============ CACHE MONITOR ============ -->
+    <section id="cache-monitor" class="section">
+      <div class="section-head">
+        <div>
+          <h2>Cache Monitor</h2>
+          <p class="muted">Live statistics from the FastAPI backend and Redis.</p>
+        </div>
+        <button class="btn btn-ghost" id="refresh-stats">↻ Refresh</button>
+      </div>
+
+      <div class="monitor-layout">
+        <div class="panel">
+          <h3 class="panel-title">System Status</h3>
+          <ul class="status-list" id="system-status">
+            <li><span class="dot"></span><span class="status-name">API</span><span class="status-value">—</span></li>
+            <li><span class="dot"></span><span class="status-name">Database</span><span class="status-value">—</span></li>
+            <li><span class="dot"></span><span class="status-name">Redis</span><span class="status-value">—</span></li>
+          </ul>
+        </div>
+
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card"><span class="stat-label">Cache Hits</span><span class="stat-value hit" data-stat="hits">—</span></div>
+          <div class="stat-card"><span class="stat-label">Cache Misses</span><span class="stat-value miss" data-stat="misses">—</span></div>
+          <div class="stat-card"><span class="stat-label">Hit Rate</span><span class="stat-value accent" data-stat="hit_rate">—</span></div>
+          <div class="stat-card"><span class="stat-label">Cached Keys</span><span class="stat-value violet" data-stat="cached_keys">—</span></div>
+        </div>
+      </div>
+
+      <div class="monitor-layout two">
+        <div class="panel">
+          <div class="panel-head">
+            <h3 class="panel-title">Cache Performance</h3>
+          </div>
+          <div id="perf-demo" class="perf-demo"></div>
+          <div class="perf-controls">
+            <label for="perf-product" class="muted small">Live test — request a product twice:</label>
+            <div class="perf-row">
+              <select id="perf-product" class="input"></select>
+              <button class="btn btn-primary" id="run-test">Run test</button>
+            </div>
+            <label class="check small">
+              <input type="checkbox" id="perf-flush" checked>
+              Clear the Redis cache first (guarantees the first request is a MISS)
+            </label>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h3 class="panel-title">Cached Keys <span class="muted small" id="ttl-info"></span></h3>
+            <button class="btn btn-ghost btn-sm btn-danger-ghost" id="flush-cache">Clear cache</button>
+          </div>
+          <div class="keys-wrap">
+            <table class="keys-table">
+              <thead><tr><th>Redis key</th><th>Expires in</th></tr></thead>
+              <tbody id="keys-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">◈ Project Catalogue — Improving Web Application Performance Using Redis Caching</div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

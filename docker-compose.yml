@@ -1,0 +1,37 @@
+# Starts the whole app:  docker compose up --build
+#   Frontend : http://localhost:5500
+#   Backend  : http://localhost:8000   (API docs: /docs)
+#   Redis    : internal only, reached by the backend as redis://redis:6379
+
+services:
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    # Supabase keys come from backend/.env. It is optional so CI can start
+    # the stack without secrets (the database then reports "disconnected").
+    env_file:
+      - path: ./backend/.env
+        required: false
+    environment:
+      # Overrides REDIS_URL from .env so the backend uses the Redis container.
+      REDIS_URL: redis://redis:6379/0
+      FRONTEND_ORIGINS: http://localhost:5500,http://127.0.0.1:5500
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5500:80"
+    depends_on:
+      - backend
